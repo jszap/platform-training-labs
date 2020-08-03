@@ -65,7 +65,6 @@ public class WordCount {
          .filter(word -> !word.isEmpty())
          .groupingKey(wholeItem())
          .aggregate(counting())
-        // .writeTo(Sinks.map(COUNTS));
          .writeTo(Sinks.remoteMap(COUNTS,Utils.clientConfigForExternalHazelcast()));
         return p;
     }
@@ -80,12 +79,10 @@ public class WordCount {
             setup();
             System.out.println("\nCounting words... ");
             long start = System.nanoTime();
-            Pipeline p = buildPipeline();
-            JobConfig jobConfig = new JobConfig();
-            jobConfig.setName("WordCount");
-            jet.newJob(p, jobConfig).join();
+            
+            //TODO: Use the jet instance to create a new job name 'WordCountBatch' and and wait for it to complete.  
+                   
             System.out.println("done in " + TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - start) + " milliseconds.");
-           // Map<String, Long> results = jet.getMap(COUNTS);
             Map<String, Long> results = Utils.remoteHazelcastInstance(Utils.clientConfigForExternalHazelcast()).getMap(COUNTS);
             checkResults(results);
             printResults(results);

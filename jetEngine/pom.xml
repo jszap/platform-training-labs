@@ -7,8 +7,7 @@
   </parent>
   <artifactId>jetEngine</artifactId>
   <name>Jet Engine</name>
-
-  <url>http://maven.apache.org</url>
+  <description>Demonstarte the use of Hazelcast Jet stream procesing enginge(SPE) for batch and streaming data processing.</description>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

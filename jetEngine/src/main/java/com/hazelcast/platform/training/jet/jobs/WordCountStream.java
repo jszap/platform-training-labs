@@ -63,7 +63,7 @@ public class WordCountStream {
 						.<String>getQueue("TrainingSourceQueue")))
 				.<String>fillBufferFn(QueueContext::fillBuffer).build();
 		
-		// Ingestion lines of text from source in real-time
+		// Ingest lines of text from source in real-time
 		p.readFrom(queueSource).withIngestionTimestamps().flatMap(e -> traverseArray(delimiter.split(e.toLowerCase())))
 				.filter(word -> !word.isEmpty()).groupingKey(wholeItem()).window(WindowDefinition.sliding(1_000, 1_000))
 				// .window(WindowDefinition.tumbling(15_000))
@@ -79,12 +79,9 @@ public class WordCountStream {
 
 	private void go() {
 		try {
-			jet = Jet.bootstrappedInstance();
-			Pipeline p = buildPipeline();
-
-			JobConfig jobConfig = new JobConfig();
-			jobConfig.setName("WordCountStream");
-			jet.newJob(p, jobConfig);
+			
+            //TODO: Get the jet instance and create a new job name 'WordCountStreaming'.  
+			
 			Thread printResultsThread = new Thread(new Runnable() {
 				public void run() {
 					while (true) {

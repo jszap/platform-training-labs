@@ -1,7 +1,5 @@
 package com.hazelcast.platform.training.jet;
 
-import com.hazelcast.jet.Jet;
-import com.hazelcast.jet.JetInstance;
 import com.hazelcast.jet.pipeline.Pipeline;
 import com.hazelcast.jet.pipeline.Sinks;
 import com.hazelcast.jet.pipeline.test.TestSources;
@@ -19,8 +17,7 @@ public class App
     	   .filter(event -> event.sequence() % 2 == 0)
     	   .setName("filter out odd numbers")
     	   .writeTo(Sinks.logger());
-    	  
-    	  JetInstance jet = Jet.newJetInstance();
-    	  jet.newJob(p).join();
-    	}
+ 
+    	  //TODO: Using the provide pipeline 'p', instantiate a Jet instance, start a job, and wait for it to complete.
+    }
 }

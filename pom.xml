@@ -8,7 +8,7 @@
   <description>Hazelcast platform training labs exercises</description>
   <modules>
   	<module>cloudClient</module>
-  	<module>embeddedIMDGMember</module>
+  	<module>imdgCluster</module>
   	<module>jetEngine</module>
   </modules>
 </project>

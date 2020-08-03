@@ -36,7 +36,7 @@ public class CloudMessageQueueClient {
 	
 	private void produceMessages() {
 		try {
-			
+			//TODO: using h
 			IQueue<String> queue=instance.getQueue("TrainingQueue");
 			int i=0;
 			 while(true){
