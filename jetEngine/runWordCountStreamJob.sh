@@ -1,1 +1,1 @@
-mvn exec:java -D"exec.mainClass"="com.hazelcast.platform.training.jet.WordCountStream"
+mvn exec:java -D"exec.mainClass"="com.hazelcast.platform.training.jet.jobs.WordCountStream"
