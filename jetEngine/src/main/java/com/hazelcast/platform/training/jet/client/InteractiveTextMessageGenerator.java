@@ -13,8 +13,6 @@ public class InteractiveTextMessageGenerator {
 	HazelcastInstance instance;
 	public InteractiveTextMessageGenerator(){
 		 instance = HazelcastClient.newHazelcastClient(Utils.clientConfigForExternalHazelcast());
-		//JetInstance jet = Jet.bootstrappedInstance();
-		//instance = jet.getHazelcastInstance();
 		Thread producer = new Thread(new Runnable(){
 			public void run(){
 				processInput();
@@ -27,7 +25,7 @@ public class InteractiveTextMessageGenerator {
 	private void processInput(){
 		try {
 			
-			IQueue<String> queue=instance.getQueue("LabSourceQueue");
+			IQueue<String> queue=instance.getQueue("TrainingSourceQueue");
 			BufferedReader reader =
 	                   new BufferedReader(new InputStreamReader(System.in));
 			while(true){
