@@ -37,11 +37,12 @@ public class MessageQueueClient {
 	private void produceMessages() {
 		try {
 			
-			IQueue<String> queue=instance.getQueue("TrainingQueue");
+			//TODO: Get a reference handle to the distribute message Queue
+			IQueue<String> trainingQueue = null;
 			int i=0;
 			 while(true){
-				String message =  "Adding Message "+ Double.toString(Math.random());
-		        queue.offer(message);
+				String message  =  "Adding Message "+ (++i);
+				trainingQueue.offer(message);
 				Thread.sleep(500);
 			}
 		} catch (Exception e) {
@@ -50,10 +51,10 @@ public class MessageQueueClient {
 	}				
 
 	private void consumeMessages(){
-		IQueue<String> queue=instance.getQueue("TrainingQueue");
+		IQueue<String> trainingQueue = instance.getQueue("TrainingQueue");
 		while (true){
 			try {
-				String incomingMessage = queue.take();
+				String incomingMessage = trainingQueue.take();
 				System.out.println(" Message Consumed :"+incomingMessage);
 			} catch (InterruptedException e) {
 				e.printStackTrace();

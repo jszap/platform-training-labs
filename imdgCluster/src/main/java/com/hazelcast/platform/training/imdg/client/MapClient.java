@@ -21,7 +21,7 @@ public class MapClient {
 
 		Thread mapWriterThread = new Thread(new Runnable(){
 			public void run(){
-				processInput();
+				doMapPuts();
 			}
 		}); 
 		
@@ -29,19 +29,19 @@ public class MapClient {
 		
 	}
 	
-	private void processInput(){
+	private void doMapPuts(){
 		try {
+			//TODO: Get a reference handle to the distribute map
 			
-			IMap<String,String> map=instance.getMap("TrainnigMap");
 			Random randInt = new Random();
-			Integer.toString(randInt.nextInt(10000));
-			
 			 while(true){
-				String key = "key"+Integer.toString(randInt.nextInt(10000));
+				String key = "key" + Integer.toString(randInt.nextInt(10000));
+				String value = Double.toString(Math.random());
 				System.out.println("Adding Entry key: "+ key);
-		        //String OldValue = map.put(key,Double.toString(Math.random()));
-		        map.set(key,Double.toString(Math.random()));
-				Thread.sleep(500);
+				
+				//TODO: Put entry into the map				
+		        
+		        Thread.sleep(500);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

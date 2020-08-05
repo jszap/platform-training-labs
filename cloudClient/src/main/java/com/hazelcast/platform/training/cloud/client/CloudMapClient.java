@@ -9,7 +9,7 @@ import com.hazelcast.core.IMap;
  *
  */
 public class CloudMapClient {
-	private static HazelcastInstance instance;
+	private static HazelcastInstance hzCloudClient;
 	
 	/**
 	 * Cloud IMDG Exercise 1 - Simply putting entries into hosted IMDG cloud service
@@ -21,19 +21,19 @@ public class CloudMapClient {
 	}
 	
 	private static void init() {
-		if(instance == null) {
-			instance = HazelcastClient.newHazelcastClient(Utils.getCloudClientConfig());
+		if(hzCloudClient == null) {
+			hzCloudClient = HazelcastClient.newHazelcastClient(Utils.getCloudClientConfig());
 		}
 	}
 	
-	public void putEntriesInToMap(){
+	public void putEntriesIntoCloudMap(){
 		try {
 			
-			IMap<String,String> map=instance.getMap("TrainingMap");
+			IMap<String,String> trainingMap = hzCloudClient.getMap("TrainingMap");
 			int i=0;
 			 while(true){
 				System.out.println("Adding Entry "+ (++i));
-		        map.set(Integer.toString(i),Double.toString(Math.random()));
+				trainingMap.set(Integer.toString(i),Double.toString(Math.random()));
 				Thread.sleep(500);
 			}
 		} catch (Exception e) {
@@ -43,6 +43,6 @@ public class CloudMapClient {
 	
 	public static void main(String[] args) {
 		CloudMapClient cloudMapClient = new CloudMapClient();
-		cloudMapClient.putEntriesInToMap();
+		cloudMapClient.putEntriesIntoCloudMap();
 	}
  }

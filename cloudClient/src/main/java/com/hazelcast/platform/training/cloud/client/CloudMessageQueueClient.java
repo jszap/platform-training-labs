@@ -5,16 +5,20 @@ import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.core.IQueue;
 
 /**
- * Cloud IMDG Exercise 2 - Messaging putting message into IMDG cloud service queue
+ * Cloud IMDG Exercise 2 - Messaging - sending & consuming messages using IMDG cloud service queue
  *
  */
 
 public class CloudMessageQueueClient {
 	
-	HazelcastInstance instance;
+	private HazelcastInstance hzCloudClient;
 	
 	public CloudMessageQueueClient(){
-		instance = HazelcastClient.newHazelcastClient(Utils.getCloudClientConfig());
+	}
+	
+	private void init() {
+		//TODO: Create a Hazelcast cloud client instance using Utils class
+		hzCloudClient = HazelcastClient.newHazelcastClient(Utils.getCloudClientConfig());
 		Thread messageProducerThread = new Thread(new Runnable(){
 			public void run(){
 				produceMessages();
@@ -33,14 +37,14 @@ public class CloudMessageQueueClient {
 		messageProducerThread.start();
 		messageConsumerThread.start();
 	}
-	
+
 	private void produceMessages() {
 		try {
-			//TODO: using h
-			IQueue<String> queue=instance.getQueue("TrainingQueue");
+			//TODO: get reference handle to a named distributed Queue 
+			IQueue<String> trainingQueue = hzCloudClient.getQueue("TrainingQueue");
 			int i=0;
 			 while(true){
-		        queue.offer("Adding Message "+ (++i));
+				 trainingQueue.offer("Adding Message "+ (++i));
 				Thread.sleep(500);
 			}
 		} catch (Exception e) {
@@ -49,10 +53,11 @@ public class CloudMessageQueueClient {
 	}				
 
 	private void consumeMessages(){
-		IQueue<String> queue=instance.getQueue("TrainingQueue");
+		//TODO: get reference handle to the distributed Queue 
+		IQueue<String> trainingQueue = hzCloudClient.getQueue("TrainingQueue");
 		while (true){
 			try {
-				String value = queue.take();
+				String value = trainingQueue.take();
 				System.out.println(" Message Consumed :"+value);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
@@ -63,5 +68,7 @@ public class CloudMessageQueueClient {
 		
 	public static void main(String[] args) {
 		CloudMessageQueueClient cloudMessageQueueClient = new CloudMessageQueueClient();
+		cloudMessageQueueClient.init();
 	}
+
  }
