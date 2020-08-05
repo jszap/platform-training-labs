@@ -33,7 +33,9 @@ public class CloudMapClient {
 			int i=0;
 			 while(true){
 				System.out.println("Adding Entry "+ (++i));
-				trainingMap.set(Integer.toString(i),Double.toString(Math.random()));
+				String key = "key" + Integer.toString(i);
+				String value = Double.toString(Math.random());
+				trainingMap.set(key,value);
 				Thread.sleep(500);
 			}
 		} catch (Exception e) {
